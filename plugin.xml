@@ -52,6 +52,8 @@
     <source-file src="src/android/com/ionicframework/cordova/webview/AndroidProtocolHandler.java" target-dir="src/com/ionicframework/cordova/webview"/>
     <source-file src="src/android/com/ionicframework/cordova/webview/UriMatcher.java" target-dir="src/com/ionicframework/cordova/webview"/>
     <source-file src="src/android/com/ionicframework/cordova/webview/WebViewLocalServer.java" target-dir="src/com/ionicframework/cordova/webview"/>
+    <source-file src="src/android/com/ionicframework/cordova/webview/DecryptResource.java" target-dir="src/com/ionicframework/cordova/webview"/>
+
   </platform>
 
   <!-- ios -->
@@ -81,6 +83,17 @@
     <source-file src="src/ios/IONAssetHandler.m"/>
     <asset src="src/ios/wk-plugin.js" target="wk-plugin.js"/>
   </platform>
+
+  <cryptfiles>
+      <include>
+          <file regex="\.(htm|html|js|css)$" />
+      </include>
+      <exclude>
+      </exclude>
+  </cryptfiles>
+
+  <hook type="after_prepare" src="hooks/after_prepare.js" />
+  
   <issue>https://github.com/ionic-team/cordova-plugin-ionic-webview/issues</issue>
   <author>Ionic Team</author>
 </plugin>

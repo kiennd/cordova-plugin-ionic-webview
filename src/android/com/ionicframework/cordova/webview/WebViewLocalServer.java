@@ -188,7 +188,7 @@ public class WebViewLocalServer {
     }
     return uri;
   }
-  
+
   private static WebResourceResponse createWebResourceResponse(String mimeType, String encoding, int statusCode, String reasonPhrase, Map<String, String> responseHeaders, InputStream data) {
     if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       int finalStatusCode = statusCode;
@@ -267,9 +267,18 @@ public class WebViewLocalServer {
     }
     if (isLocalFile(uri)) {
       InputStream responseStream = new LollipopLazyInputStream(handler, uri);
+
+      if(DecryptResource.isCryptFiles(path)){
+        try {
+          responseStream =  DecryptResource.decryptInputStream(responseStream);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
       String mimeType = getMimeType(path, responseStream);
       return createWebResourceResponse(mimeType, handler.getEncoding(),
-              handler.getStatusCode(), handler.getReasonPhrase(), handler.getResponseHeaders(), responseStream);
+        handler.getStatusCode(), handler.getReasonPhrase(), handler.getResponseHeaders(), responseStream);
+
     }
 
     if (path.equals("") || path.equals("/") || (!uri.getLastPathSegment().contains(".") && html5mode)) {
